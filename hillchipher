@@ -1,0 +1,14 @@
+import numpy as np
+
+def hill_encrypt(text, key):
+    text = text.upper().replace(' ', '')
+    n = int(len(key)**0.5)
+    key = np.array(key).reshape(n, n)
+    result = ''
+    for i in range(0, len(text), n):
+        block = [ord(c) - 65 for c in text[i:i+n]]
+        cipher = np.dot(key, block) % 26
+        result += ''.join(chr(c + 65) for c in cipher)
+    return result
+
+print(hill_encrypt('TEST', [3, 3, 2, 5]))
